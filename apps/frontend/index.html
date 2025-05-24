@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Security Diploma K8s</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    />
+  </head>
+  <body>
+    <div class="container" role="main">
+      <header role="banner">
+        <h1>Security Diploma K8s</h1>
+        <div class="status" role="status" aria-live="polite">
+          <div
+            id="statusIndicator"
+            class="status-indicator"
+            aria-hidden="true"
+          ></div>
+          <span id="statusText">Проверка...</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="card" aria-labelledby="users-heading">
+          <h2 id="users-heading">Пользователи</h2>
+          <form
+            class="form-group"
+            id="userForm"
+            aria-label="Форма добавления пользователя"
+          >
+            <div>
+              <label for="userName">Имя</label>
+              <input
+                type="text"
+                id="userName"
+                placeholder="Введите имя"
+                required
+              />
+            </div>
+            <div>
+              <label for="userEmail">Email</label>
+              <input
+                type="email"
+                id="userEmail"
+                placeholder="Введите email"
+                required
+              />
+            </div>
+            <button type="submit" id="createUserButton">
+              Добавить пользователя
+            </button>
+          </form>
+          <div
+            id="usersList"
+            class="users-list"
+            role="list"
+            aria-label="Список пользователей"
+          >
+            <p class="loading">Загрузка пользователей...</p>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="stats-heading">
+          <h2 id="stats-heading">Статистика</h2>
+          <div class="stats">
+            <div class="stat-item">
+              <span class="stat-label">Всего пользователей:</span>
+              <span class="stat-value" id="userCount">-</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Последнее обновление:</span>
+              <span class="stat-value" id="lastUpdate">-</span>
+            </div>
+          </div>
+          <button id="refreshStatsButton" aria-label="Обновить статистику">
+            Обновить статистику
+          </button>
+        </section>
+
+        <section class="card" aria-labelledby="security-heading">
+          <h2 id="security-heading">Информация о безопасности</h2>
+          <div
+            id="securityInfo"
+            class="security-info"
+            role="region"
+            aria-live="polite"
+          >
+            <p class="loading">Загрузка информации о безопасности...</p>
+          </div>
+          <button
+            id="refreshSecurityButton"
+            aria-label="Обновить информацию о безопасности"
+          >
+            Обновить информацию
+          </button>
+        </section>
+
+        <section class="card" aria-labelledby="endpoints-heading">
+          <h2 id="endpoints-heading">Доступные API эндпоинты</h2>
+          <div
+            id="endpoints"
+            class="endpoints"
+            role="list"
+            aria-label="Список API эндпоинтов"
+          >
+            <p class="loading">Загрузка эндпоинтов...</p>
+          </div>
+          <button
+            id="refreshEndpointsButton"
+            aria-label="Обновить список эндпоинтов"
+          >
+            Обновить список
+          </button>
+        </section>
+      </main>
+
+      <footer role="contentinfo">
+        <p>Security Diploma K8s Client v1.0.0</p>
+      </footer>
+    </div>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
