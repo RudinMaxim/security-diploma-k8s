@@ -14,10 +14,17 @@ spec:
         app: nginx
     spec:
       containers:
-        - name: nginx
-          image: apps-frontend:latest
-          ports:
-            - containerPort: 80
+      - name: nginx
+        image: apps-frontend
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: API_URL
 ---
 apiVersion: v1
 kind: Service

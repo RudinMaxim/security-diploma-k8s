@@ -7,12 +7,10 @@ const crypto = require("crypto");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Генерация nonce
 const generateNonce = () => {
   return crypto.randomBytes(16).toString("base64");
 };
 
-// Middleware для добавления nonce в заголовки
 app.use((req, res, next) => {
   const nonce = generateNonce();
   res.locals.nonce = nonce;
@@ -42,7 +40,6 @@ redisClient.on("error", (err) => console.error("Redis Client Error", err));
 app.use(cors());
 app.use(express.json());
 
-// Эндпоинт для получения nonce (для динамической подстановки в HTML)
 app.get("/api/nonce", (req, res) => {
   res.json({ nonce: res.locals.nonce });
 });
@@ -181,7 +178,6 @@ function getEndpointDescription(path, method) {
   return descriptions[path] || "Описание недоступно";
 }
 
-// Подключение к Redis
 (async () => {
   try {
     await redisClient.connect();

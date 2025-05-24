@@ -4,11 +4,11 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Копируем только package-файлы и ставим prod-зависимости
-COPY apps/backend/package.json apps/backend/package-lock.json ./
+COPY ../apps/backend/package.json ../apps/backend/package-lock.json ./
 RUN npm ci --omit=dev
 
-# Копируем только код бэкенда
-COPY apps/backend/src ./src
+# Копируем только код server
+COPY ../apps/backend/src ./src
 
 # 2) Стадия рантайма
 FROM node:18-alpine

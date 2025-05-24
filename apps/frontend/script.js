@@ -1,6 +1,4 @@
-const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'http://backend:3000';
+const API_BASE_URL = window.API_URL || '/api';
 
 const $ = (id) => document.getElementById(id);
 const formatDate = (dateString) => new Date(dateString).toLocaleString("ru-RU");

@@ -1,9 +1,9 @@
 FROM nginx:1.25-alpine
 
-# Create non-privileged user
+# Создать непривилегированного пользователя
 RUN addgroup -S nginxgroup && adduser -S nginxuser -G nginxgroup
 
-# Create necessary directories and set permissions
+# Создайте необходимые каталоги и установите разрешения
 RUN mkdir -p \
     /var/cache/nginx/client_temp \
     /var/cache/nginx/proxy_temp \

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: test-app
+data:
+  API_URL: http://backend.test-app.svc.cluster.local:3000/api
