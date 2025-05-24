@@ -1,0 +1,18 @@
+# Игнорируем ненужные директории и файлы
+node_modules
+npm-debug.log
+.git
+.gitignore
+.env
+.env.example
+README.md
+setup.sh
+k8s/
+# Для backend игнорируем фронтенд
+apps/frontend
+# Для frontend игнорируем бэкенд
+apps/backend
+# Игнорируем остальные файлы в корне
+docker-compose.local.yml
+init.sql
+nginx.conf

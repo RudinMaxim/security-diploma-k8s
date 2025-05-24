@@ -4,11 +4,11 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Копируем только package-файлы и ставим prod-зависимости
-COPY package.json package-lock.json ./
+COPY apps/backend/package.json apps/backend/package-lock.json ./
 RUN npm ci --omit=dev
 
-# Копируем весь код
-COPY . .
+# Копируем только код бэкенда
+COPY apps/backend/src ./src
 
 # 2) Стадия рантайма
 FROM node:18-alpine
@@ -16,11 +16,9 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Создаём группу и пользователя без статического GID
-# -S: addgroup/adduser в “system mode”, без пароля
-RUN addgroup -S appgroup \
-    && adduser  -S appuser -G appgroup
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Копируем из builder-а, меняя владельца на нашего непривилегированного юзера
+# Копируем из builder-а, меняя владельца
 COPY --from=builder --chown=appuser:appgroup /app /app
 
 # Переключаемся на непривилегированного пользователя
