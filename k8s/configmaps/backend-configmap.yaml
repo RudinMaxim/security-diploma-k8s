@@ -4,9 +4,9 @@ metadata:
   name: backend-config
   namespace: test-app
 data:
-  PORT: "3000"
-  DB_HOST: "postgres"
-  DB_PORT: "5432"
-  REDIS_HOST: "redis"
+  REDIS_HOST: redis.test-app.svc.cluster.local
   REDIS_PORT: "6379"
-  DB_NAME: "testdb"
+  DB_HOST: postgres.test-app.svc.cluster.local
+  DB_PORT: "5432"
+  DB_NAME: appdb
+  PORT: "3000"

@@ -1,37 +1,59 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny
-  namespace: test-app
-spec:
-  podSelector: {}
-  policyTypes:
-    - Ingress
-    - Egress
-  egress:
-    # Allow DNS
-    - to: []
-      ports:
-        - protocol: UDP
-          port: 53
-    # Allow access to kube-system for service discovery
-    - to:
-        - namespaceSelector:
-            matchLabels:
-              name: kube-system
----
-# Добавить для внешнего доступа
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-external-to-nginx
+  name: allow-backend-to-redis
   namespace: test-app
 spec:
   podSelector:
     matchLabels:
-      app: nginx
-  ingress:
-    - {} # Allow all ingress to nginx
+      app: redis
   policyTypes:
     - Ingress
-
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: backend
+      ports:
+        - protocol: TCP
+          port: 6379
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-backend-to-postgres
+  namespace: test-app
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: backend
+      ports:
+        - protocol: TCP
+          port: 5432
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-nginx-to-backend
+  namespace: test-app
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: nginx
+      ports:
+        - protocol: TCP
+          port: 3000
