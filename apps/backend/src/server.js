@@ -40,7 +40,7 @@ redisClient.on("error", (err) => console.error("Redis Client Error", err));
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/nonce", (req, res) => {
+app.get("/nonce", (req, res) => {
   res.json({ nonce: res.locals.nonce });
 });
 
@@ -63,7 +63,7 @@ app.get("/health", async (req, res) => {
   }
 });
 
-app.get("/api/users", async (req, res) => {
+app.get("/users", async (req, res) => {
   try {
     const result = await pgPool.query("SELECT id, name, email FROM users");
     res.json(result.rows);
@@ -73,7 +73,7 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-app.post("/api/users", async (req, res) => {
+app.post("/users", async (req, res) => {
   const { name, email } = req.body;
   try {
     const result = await pgPool.query(
@@ -87,7 +87,7 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-app.get("/api/stats", async (req, res) => {
+app.get("/stats", async (req, res) => {
   try {
     const cached = await redisClient.get("stats");
     if (cached) {
@@ -110,7 +110,7 @@ app.get("/api/stats", async (req, res) => {
   }
 });
 
-app.get("/api/security", (req, res) => {
+app.get("/security", (req, res) => {
   res.json({
     container: {
       user: process.getuid ? process.getuid() : "unknown",
@@ -128,7 +128,7 @@ app.get("/api/security", (req, res) => {
   });
 });
 
-app.get("/api/endpoints", (req, res) => {
+app.get("/endpoints", (req, res) => {
   const endpoints = [];
 
   app._router.stack.forEach((middleware) => {
@@ -165,7 +165,7 @@ app.get("/api/endpoints", (req, res) => {
 function getEndpointDescription(path, method) {
   const descriptions = {
     "/health": "Проверка состояния сервиса и подключений к БД и Redis",
-    "/api/users":
+    "/users":
       method === "get"
         ? "Получение списка всех пользователей"
         : "Создание нового пользователя",
@@ -191,10 +191,10 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`Backend running on port ${PORT}`);
   console.log(`Available endpoints:`);
   console.log(`  GET  /health - Health check`);
-  console.log(`  GET  /api/users - Get all users`);
-  console.log(`  POST /api/users - Create new user`);
-  console.log(`  GET  /api/stats - Get statistics`);
-  console.log(`  GET  /api/security - Security information`);
-  console.log(`  GET  /api/endpoints - List all endpoints`);
-  console.log(`  GET  /api/nonce - Get nonce for CSP`);
+  console.log(`  GET  /users - Get all users`);
+  console.log(`  POST /users - Create new user`);
+  console.log(`  GET  /stats - Get statistics`);
+  console.log(`  GET  /security - Security information`);
+  console.log(`  GET  /endpoints - List all endpoints`);
+  console.log(`  GET  /nonce - Get nonce for CSP`);
 });
