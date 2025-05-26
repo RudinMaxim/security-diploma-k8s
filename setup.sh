@@ -22,11 +22,6 @@ minikube start \
     --driver=docker \
     --addons=ingress,metrics-server
 
-# Enable necessary addons
-echo "🔌 Enabling addons..."
-minikube addons enable dashboard
-minikube addons enable storage-provisioner
-
 # Build and load custom images
 echo "🏗️ Building application images..."
 eval $(minikube docker-env)
